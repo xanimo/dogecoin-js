@@ -21,7 +21,7 @@ describe('Test all address interfaces (mainnet)', () => {
 
     expect(pub.length).is.equal(34)
     expect(priv.length).is.gt(1)
-    expect(priv.length).is.lt(200)
+    expect(priv.length).is.lt(112)
   })
 
   it('generateDerivedHDPubkey', () => {
@@ -69,8 +69,7 @@ describe('Test all address interfaces (testnet)', () => {
     const [priv, pub] = wrapper.generateHDMasterPubKeypair(true)
 
     expect(pub.length).is.equal(34)
-    expect(priv.length).is.gt(1)
-    expect(priv.length).is.lt(200)
+    expect(priv.length).is.equal(111)
   })
 
   it('generateDerivedHDPubkey', () => {
@@ -97,16 +96,16 @@ describe('Test all address interfaces (testnet)', () => {
     expect(privKey.length).is.equal(111)
   })
 
-  it.skip('verifyPrivPubKeypair', () => {
+  it('verifyPrivPubKeypair', () => {
     const [priv, pub] = wrapper.generatePrivPubKeypair(true)
-    const valid = wrapper.verifyPrivPubKeypair(priv, pub)
+    const valid = wrapper.verifyPrivPubKeypair(priv, pub, true)
 
     expect(valid).not.equal(false)
   })
 
-  it.skip('verifyHDMasterPubKeypair', () => {
+  it('verifyHDMasterPubKeypair', () => {
     const [priv, pub] = wrapper.generateHDMasterPubKeypair(true)
-    const valid = wrapper.verifyHDMasterPubKeypair(priv, pub)
+    const valid = wrapper.verifyHDMasterPubKeypair(priv, pub, true)
 
     expect(valid).not.equal(false)
   })
@@ -114,7 +113,8 @@ describe('Test all address interfaces (testnet)', () => {
   it('verifyPrivPubKeypair', () => {
     const [, pub] = wrapper.generatePrivPubKeypair(true)
     const valid = wrapper.verifyP2pkhAddress(pub)
-
+    console.log(pub)
+    console.log(valid)
     expect(valid).not.equal(false)
   })
 })
@@ -157,7 +157,7 @@ describe('Test all transaction interfaces', () => {
     expect(valid).not.equal(false)
   })
 
-  it.skip('finalizeTransaction', () => {
+  it('finalizeTransaction', () => {
     const index = wrapper.startTransaction()
     wrapper.addUTXO(
       index,
@@ -166,7 +166,7 @@ describe('Test all transaction interfaces', () => {
     )
     wrapper.addUTXO(
       index,
-      '42113bdc65fc2943cf0359ea1a24ced0b6b0b5290db4c63a3329c6601c4616e2',
+      '42113bdc65fc2943cf0349ea1a24ced0b6b0b5290db4c63a3329c6601c4616e2',
       1
     )
     wrapper.addOutput(index, 'nbGfXLskPh7eM1iG5zz5EfDkkNTo9TRmde', '5.0')
@@ -177,11 +177,11 @@ describe('Test all transaction interfaces', () => {
       '12.0',
       'noxKJyGPugPRN4wqvrwsrtYXuQCk7yQEsy'
     )
-
+      console.log(hex)
     expect(hex).not.equal('0')
   })
 
-  it.skip('getRawTransaction', () => {
+  it('getRawTransaction', () => {
     const index = wrapper.startTransaction()
     wrapper.addUTXO(
       index,
@@ -190,11 +190,12 @@ describe('Test all transaction interfaces', () => {
     )
     wrapper.addUTXO(
       index,
-      '42113bdc65fc2943cf0359ea1a24ced0b6b0b5290db4c63a3329c6601c4616e2',
+      '42113bdc65fc2943cf0349ea1a24ced0b6b0b5290db4c63a3329c6601c4616e2',
       1
     )
     wrapper.addOutput(index, 'DBKwBLEDY96jBtx1xCmjfBzp9FrNCWxnmM', '5.0')
     const hex = wrapper.getRawTransaction(index)
+    console.log(hex)
 
     expect(hex).not.equal('0')
   })
